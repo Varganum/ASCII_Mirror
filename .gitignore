@@ -1,0 +1,4 @@
+# Project exclude paths
+/.gradle/
+/ASCII Mirror/task/out/
+/ASCII Mirror/task/out/production/classes/
