@@ -1,41 +1,26 @@
 package asciimirror;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
 
-    static final String[] STAGE1_PICTURE = {
-            "                    _______ ",
-            "                   < hello >",
-            "                    ------- ",
-            "            ^__^   /        ",
-            "    _______/(oo)  /         ",
-            "/\\/(       /(__)            ",
-            "   | w----||                ",
-            "   ||     ||                "
-    };
-
-    static final String[] STAGE2_PICTURE = {
-            "            ^__^",
-            "    _______/(oo)",
-            "/\\/(       /(__)",
-            "   | w----||    ",
-            "   ||     ||    "
-    };
-
     static final String[] MESSAGES = {
-            "Input the file path:"
+            "Input the file path:",
+            "File not found!"
     };
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println(MESSAGES[0]);
-        String userInput = scanner.nextLine();
 
-        System.out.println(userInput);
-        for (String line : STAGE2_PICTURE) {
-            System.out.println(line);
+        try (Scanner fileScanner = new Scanner(new File((new Scanner(System.in).nextLine())))) {
+            while (fileScanner.hasNext()) {
+                System.out.println(fileScanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(MESSAGES[1]);
         }
     }
 }
