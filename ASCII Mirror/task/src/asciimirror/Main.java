@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
 
@@ -17,6 +18,7 @@ public class Main {
         ArrayList<StringBuilder> linesOfFile = new ArrayList<>();
         int maxLineLength = 0;
         StringBuilder currentString;
+        StringBuilder mirroredString;
 
         System.out.println(MESSAGES[0]);
 
@@ -31,18 +33,43 @@ public class Main {
             }
 
             char[] spaces = new char[maxLineLength];
-            for (int i = 0; i < spaces.length; i++) {
-                spaces[i] = ' ';
-            }
+            Arrays.fill(spaces, ' ');
+
 
             for (StringBuilder line : linesOfFile) {
                 if (line.length() < maxLineLength) {
                     line.insert(line.length(), spaces, 0, maxLineLength - line.length());
                 }
-                System.out.println(line + " | " + line);
+                System.out.print(line + " | ");
+                mirroredString = mirrorString(line);
+                System.out.println(mirroredString);
             }
         } catch (FileNotFoundException e) {
             System.out.println(MESSAGES[1]);
         }
+    }
+
+    private static StringBuilder mirrorString(StringBuilder stringToMirror) {
+        StringBuilder modifying = stringToMirror.reverse();
+        int resultLength = modifying.length();
+        char[] charsOfString = new char[resultLength];
+        modifying.getChars(0, resultLength, charsOfString, 0);
+        for (int i = 0; i < resultLength; i++) {
+            switch (charsOfString[i]) {
+                case '<' -> charsOfString[i] = '>';
+                case '>' -> charsOfString[i] = '<';
+                case '[' -> charsOfString[i] = ']';
+                case ']' -> charsOfString[i] = '[';
+                case '{' -> charsOfString[i] = '}';
+                case '}' -> charsOfString[i] = '{';
+                case '(' -> charsOfString[i] = ')';
+                case ')' -> charsOfString[i] = '(';
+                case '/' -> charsOfString[i] = '\\';
+                case '\\' -> charsOfString[i] = '/';
+                default -> {}
+            }
+        }
+
+        return (new StringBuilder()).append(charsOfString);
     }
 }
